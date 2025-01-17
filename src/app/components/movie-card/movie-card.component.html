@@ -1,0 +1,7 @@
+<div class="movie-card">
+    <img [src]="movie.posterUrl" alt="Movie Poster" />
+    <h3>{{ movie.title }}</h3>
+    <p>{{ movie.overview | slice:0:100 }}...</p>
+    <button [routerLink]="['/movie', movie.id]">Details</button>
+  </div>
+  

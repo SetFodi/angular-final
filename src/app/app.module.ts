@@ -1,18 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// Import your standalone components directly
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { MovieCardComponent } from './components/movie-card/movie-card.component';
+import { MovieDetailsComponent } from './pages/movie-details/movie-details.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
+import { MoviesComponent } from './pages/movies/movies.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  // We only declare the root if it isn't standalone
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    AppRoutingModule,
+
+    // Now your standalone stuff goes here:
+    LoginComponent,
+    RegisterComponent,
+    MovieCardComponent,
+    MovieDetailsComponent,
+    AdminComponent,
+    MoviesComponent,
+    TruncatePipe
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

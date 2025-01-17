@@ -1,0 +1,16 @@
+<h2>Admin Panel</h2>
+<form [formGroup]="movieForm" (ngSubmit)="submitMovie()">
+  <label>Title:</label>
+  <input formControlName="title" />
+
+  <label>Overview:</label>
+  <textarea formControlName="overview"></textarea>
+
+  <label>Poster URL:</label>
+  <input formControlName="posterUrl" />
+
+  <label>Rating:</label>
+  <input formControlName="rating" type="number" />
+
+  <button type="submit">Add Movie</button>
+</form>
