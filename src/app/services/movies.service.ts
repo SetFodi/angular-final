@@ -19,56 +19,102 @@ const DEFAULT_MOVIES: Movie[] = [
     overview: 'A computer hacker learns about the true nature of reality...',
     posterUrl: 'https://imgc.allpostersimages.com/img/posters/naxart-the-matrix-neo_u-l-q1qih2d0.jpg?artHeight=550&artPerspective=n&artWidth=550&background=ffffff',
     rating: 9
+  },
+  {
+    id: 2,
+    title: 'Code Geass',
+    overview: 'Rebellion, strategy, betrayal, mechas, Geass, revolution.',
+    posterUrl: 'https://www.pixelstalk.net/wp-content/uploads/2016/05/HD-Code-Geass-Wallpapers.jpg',
+    rating: 10
+  },
+  {
+    id: 3,
+    title: 'Inception',
+    overview: 'A thief who steals corporate secrets through use of dream-sharing technology is given the inverse task of planting an idea into the mind of a CEO.',
+    posterUrl: 'https://static1.moviewebimages.com/wordpress/wp-content/uploads/movie/i0DBDLhuWiY4ue0we5ebwb0W6gxRJF.jpg',
+    rating: 9
+  },
+  {
+    id: 4,
+    title: 'Interstellar',
+    overview: 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity\'s survival.',
+    posterUrl: 'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg',
+    rating: 10
+  },
+  {
+    id: 5,
+    title: 'Death Note',
+    overview: 'Young Japanese student gets hands to the Death Note',
+    posterUrl: 'https://m.media-amazon.com/images/M/MV5BNjRiNmNjMmMtN2U2Yi00ODgxLTk3OTMtMmI1MTI1NjYyZTEzXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg',
+    rating: 8
+  },
+  {
+    id: 6,
+    title: 'Naruto Shippuden',
+    overview: 'Naruto Uzumaki and his comrades return to Konohagakure to stop the rogue ninja.',
+    posterUrl: 'https://wallpapercave.com/wp/wp8840621.jpg',
+    rating: 9
   }
-  // You can add more default movies here
 ];
-
 @Injectable({
   providedIn: 'root'
 })
 export class MoviesService {
-  private localStorageKey = 'moviesData'; // Key for storing all movies
-  private movies: Movie[] = this.loadMovies();
+  private defaultMoviesKey = 'defaultMovies';
+  private addedMoviesKey = 'addedMovies';
+  private defaultMovies: Movie[] = DEFAULT_MOVIES;
+  private addedMovies: Movie[] = this.loadAddedMovies();
+  private moviesSubject = new BehaviorSubject<Movie[]>([...this.defaultMovies, ...this.addedMovies]);
   private nextId: number = this.getNextId();
-  private moviesSubject = new BehaviorSubject<Movie[]>(this.movies);
 
-  constructor() {}
+  constructor() {
+    // Initialize default movies if not already present
+    this.initializeDefaultMovies();
+  }
 
   /**
-   * Loads movies from localStorage.
-   * If no data exists, initializes with DEFAULT_MOVIES and saves to localStorage.
-   * @returns An array of movies.
+   * Initializes default movies in localStorage if not already present.
    */
-  private loadMovies(): Movie[] {
-    const data = localStorage.getItem(this.localStorageKey);
-    if (data) {
-      try {
-        return JSON.parse(data) as Movie[];
-      } catch (error) {
-        console.error('Error parsing movies from Local Storage:', error);
-        return DEFAULT_MOVIES;
-      }
-    } else {
-      this.saveMovies(DEFAULT_MOVIES);
-      return DEFAULT_MOVIES;
+  private initializeDefaultMovies(): void {
+    const data = localStorage.getItem(this.defaultMoviesKey);
+    if (!data) {
+      localStorage.setItem(this.defaultMoviesKey, JSON.stringify(this.defaultMovies));
     }
   }
 
   /**
-   * Determines the next unique ID based on the current movies list.
-   * @returns The next unique ID.
+   * Loads added movies from localStorage.
+   * @returns An array of added movies.
    */
-  private getNextId(): number {
-    if (this.movies.length === 0) return 1;
-    return Math.max(...this.movies.map(movie => movie.id)) + 1;
+  private loadAddedMovies(): Movie[] {
+    const data = localStorage.getItem(this.addedMoviesKey);
+    if (data) {
+      try {
+        return JSON.parse(data) as Movie[];
+      } catch (error) {
+        console.error('Error parsing added movies from Local Storage:', error);
+        return [];
+      }
+    }
+    return [];
   }
 
   /**
-   * Saves the current movies list to localStorage.
-   * @param movies The array of movies to save.
+   * Saves added movies to localStorage.
+   * @param movies The array of added movies to save.
    */
-  private saveMovies(movies: Movie[]): void {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(movies));
+  private saveAddedMovies(movies: Movie[]): void {
+    localStorage.setItem(this.addedMoviesKey, JSON.stringify(movies));
+  }
+
+  /**
+   * Determines the next unique ID based on all movies.
+   * @returns The next unique ID.
+   */
+  private getNextId(): number {
+    const allMovies = [...this.defaultMovies, ...this.addedMovies];
+    if (allMovies.length === 0) return 1;
+    return Math.max(...allMovies.map(movie => movie.id)) + 1;
   }
 
   /**
@@ -91,7 +137,7 @@ export class MoviesService {
   }
 
   /**
-   * Adds a new movie to the movies array and updates subscribers.
+   * Adds a new movie to the added movies array and updates subscribers.
    * @param movieData The data of the movie to add (excluding the ID).
    * @returns An Observable of the created movie.
    */
@@ -100,39 +146,39 @@ export class MoviesService {
       id: this.nextId++,
       ...movieData
     };
-    this.movies.push(newMovie);
-    this.saveMovies(this.movies);
-    this.moviesSubject.next([...this.movies]); // Emit updated list
+    this.addedMovies.push(newMovie);
+    this.saveAddedMovies(this.addedMovies);
+    this.moviesSubject.next([...this.defaultMovies, ...this.addedMovies]); // Emit updated list
     return of(newMovie);
   }
 
   /**
-   * Deletes a movie by its ID from the movies array.
+   * Deletes a movie by its ID from the added movies array.
    * @param id The ID of the movie to delete.
    * @returns An Observable indicating whether the deletion was successful.
    */
   deleteMovie(id: number): Observable<boolean> {
-    const index = this.movies.findIndex(movie => movie.id === id);
+    const index = this.addedMovies.findIndex(movie => movie.id === id);
     if (index !== -1) {
-      this.movies.splice(index, 1);
-      this.saveMovies(this.movies);
-      this.moviesSubject.next([...this.movies]); // Emit updated list
+      this.addedMovies.splice(index, 1);
+      this.saveAddedMovies(this.addedMovies);
+      this.moviesSubject.next([...this.defaultMovies, ...this.addedMovies]); // Emit updated list
       return of(true);
     }
     return of(false);
   }
 
   /**
-   * Updates an existing movie in the movies array.
+   * Updates an existing movie in the added movies array.
    * @param updatedMovie The movie data with updated fields.
    * @returns An Observable of the updated movie or undefined if not found.
    */
   updateMovie(updatedMovie: Movie): Observable<Movie | undefined> {
-    const index = this.movies.findIndex(movie => movie.id === updatedMovie.id);
+    const index = this.addedMovies.findIndex(movie => movie.id === updatedMovie.id);
     if (index !== -1) {
-      this.movies[index] = updatedMovie;
-      this.saveMovies(this.movies);
-      this.moviesSubject.next([...this.movies]); // Emit updated list
+      this.addedMovies[index] = updatedMovie;
+      this.saveAddedMovies(this.addedMovies);
+      this.moviesSubject.next([...this.defaultMovies, ...this.addedMovies]); // Emit updated list
       return of(updatedMovie);
     }
     return of(undefined);
