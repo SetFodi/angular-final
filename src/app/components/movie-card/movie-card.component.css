@@ -48,7 +48,20 @@
   filter: none; /* Initial state: no blur */
   transition: all ease 0.4s;
 }
+.movie-card__delete-btn {
+  background-color: #ff4c4c;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background-color 0.3s ease;
+}
 
+.movie-card__delete-btn:hover {
+  background-color: #ff1a1a;
+}
 .movie-card:focus .movie-card__poster,
 .movie-card:hover .movie-card__poster {
   transform: scale(1.05); /* Slightly scale up the poster */

@@ -1,4 +1,4 @@
-/* admin.component.css */
+/* src/app/components/admin/admin.component.css */
 
 /* CSS Variables for Easy Theming */
 :root {
@@ -161,7 +161,9 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color var(--transition-duration) ease, transform var(--transition-duration) ease;
+  transition: 
+    background-color var(--transition-duration) ease, 
+    transform var(--transition-duration) ease;
   text-transform: uppercase;
   letter-spacing: 1px;
 }

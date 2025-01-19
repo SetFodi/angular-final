@@ -1,3 +1,4 @@
+<!-- src/app/components/movie-card/movie-card.component.html -->
 <article class="movie-card" tabindex="0">
   <div class="movie-card__poster-wrapper">
     <img
@@ -16,6 +17,15 @@
         [attr.aria-label]="'View details for ' + movie.title"
       >
         Details
+      </button>
+      <!-- Delete Button (Visible only to admins) -->
+      <button
+        class="movie-card__delete-btn"
+        *ngIf="isAdmin()"
+        (click)="deleteMovie()"
+        aria-label="Delete Movie"
+      >
+        Delete
       </button>
     </div>
   </div>

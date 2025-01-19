@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/components/movies/movies.component.ts
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MoviesService, Movie } from '../../services/movies.service';
 import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-movies',
@@ -10,10 +12,11 @@ import { MovieCardComponent } from '../../components/movie-card/movie-card.compo
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.css']
 })
-export class MoviesComponent implements OnInit {
+export class MoviesComponent implements OnInit, OnDestroy {
   movies: Movie[] = [];
   errorMessage?: string;
   loading: boolean = true;
+  private moviesSubscription!: Subscription;
 
   constructor(private moviesService: MoviesService) {}
 
@@ -22,7 +25,7 @@ export class MoviesComponent implements OnInit {
   }
 
   fetchMovies(): void {
-    this.moviesService.getMovies().subscribe({
+    this.moviesSubscription = this.moviesService.getMovies().subscribe({
       next: (res) => {
         this.movies = res;
         this.loading = false;
@@ -33,5 +36,11 @@ export class MoviesComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.moviesSubscription) {
+      this.moviesSubscription.unsubscribe();
+    }
   }
 }
