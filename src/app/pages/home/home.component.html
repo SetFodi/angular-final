@@ -1,9 +1,23 @@
+<!-- src/app/components/home/home.component.html -->
 <section class="home">
   <div class="home__hero-banner">
+    <!-- Background Image -->
+    <div class="home__hero-background"></div>
+    
+    <!-- Overlay -->
+    <div class="home__hero-overlay"></div>
+
+    <!-- Hero Content -->
     <div class="home__hero-content">
       <h1 class="home__hero-title">Welcome to MovieFlix</h1>
       <p class="home__hero-description">Discover the latest and greatest movies in our collection.</p>
       <button class="home__hero-button" (click)="goToMovies()">Explore Movies</button>
+    </div>
+    
+    <div class="decorative-icons">
+      <i class="fas fa-film"></i>
+      <i class="fas fa-clapperboard"></i>
+      <i class="fas fa-star"></i>
     </div>
   </div>
 </section>

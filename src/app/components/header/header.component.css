@@ -70,14 +70,19 @@
   color: var(--nav-link-color);
   font-weight: 500;
   text-decoration: none;
-  transition: color var(--transition-duration) ease-in-out;
+  transition: all ease 0.3s;
 }
 
 .header__nav-link:hover,
 .header__nav-link:focus {
   color: var(--nav-link-hover-color);
 }
-
+.header__nav-item{
+  transition: all ease 0.3s;
+}
+.header__nav-item:hover{
+  transform: scale(1.1);
+}
 /* Hamburger Toggle Button (Hidden on Desktop) */
 .header__toggle {
   display: none;
