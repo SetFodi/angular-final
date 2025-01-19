@@ -1,0 +1,209 @@
+/* CSS Variables for Easy Theming */
+:root {
+  --auth-bg-color: #1c1c1c;
+  --auth-text-color: #e5e5e5;
+  --auth-input-bg: #2c2c2c;
+  --auth-input-border: #444;
+  --auth-input-text: #e5e5e5;
+  --auth-button-bg: #e50914;
+  --auth-button-hover-bg: #f40612;
+  --auth-error-color: #ff4c4c;
+  --transition-duration: 0.3s;
+  --max-width: 400px;
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --border-radius: 8px;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Auth Section */
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #141414, #0f0f0f);
+  padding: 1rem;
+  font-family: var(--font-family);
+}
+
+/* Auth Container */
+.auth__container {
+  background-color: var(--auth-bg-color);
+  padding: 3rem 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--auth-text-color);
+  width: 100%;
+  max-width: var(--max-width);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Title */
+.auth__title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--auth-text-color);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: linear-gradient(90deg, #e50914, #f40612);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Error Message */
+.auth__error {
+  background-color: rgba(255, 76, 76, 0.2);
+  color: var(--auth-error-color);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Form */
+.auth__form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form Group */
+.auth__form-group {
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.auth__label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--auth-text-color);
+  font-size: 1.1rem;
+}
+
+/* Inputs */
+.auth__input {
+  padding: 0.75rem 1rem;
+  background-color: var(--auth-input-bg);
+  border: 1px solid var(--auth-input-border);
+  border-radius: 4px;
+  color: var(--auth-input-text);
+  font-size: 1rem;
+  transition: border-color var(--transition-duration) ease-in-out, box-shadow var(--transition-duration) ease-in-out;
+}
+
+.auth__input::placeholder {
+  color: #999;
+}
+
+.auth__input:focus {
+  outline: none;
+  border-color: var(--auth-button-bg);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.3);
+}
+
+/* Validation Messages */
+.auth__validation {
+  margin-top: 0.5rem;
+  color: var(--auth-error-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Submit Button */
+.auth__button {
+  background-color: var(--auth-button-bg);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-duration) ease, transform var(--transition-duration) ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all ease 0.3s;
+}
+
+.auth__button:hover:not(:disabled),
+.auth__button:focus:not(:disabled) {
+  background-color: var(--auth-button-hover-bg);
+  transform: translateY(-2px);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(201, 42, 114, 0.5);
+}
+
+.auth__button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 0 0 3px rgba(201, 42, 114, 0.5);
+}
+
+.auth__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Additional Links */
+.auth__links {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth__link {
+  color: var(--auth-button-bg);
+  text-decoration: none;
+  margin: 0.5rem 0;
+  font-weight: 500;
+  transition: color var(--transition-duration) ease-in-out, transform var(--transition-duration) ease-in-out;
+}
+
+.auth__link:hover,
+.auth__link:focus {
+  color: var(--auth-button-hover-bg);
+  transform: scale(1.05);
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .auth__container {
+    padding: 2rem 1.5rem;
+  }
+
+  .auth__title {
+    font-size: 2rem;
+  }
+
+  .auth__button {
+    padding: 0.65rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .auth__validation {
+    font-size: 0.8rem;
+  }
+
+  .auth__label {
+    font-size: 1rem;
+  }
+}

@@ -1,7 +1,26 @@
-<h2>Movies List</h2>
-<div class="movies-grid">
-  <app-movie-card 
-    *ngFor="let movie of movies"
-    [movie]="movie">
-  </app-movie-card>
-</div>
+<section class="movies">
+  <h2 class="movies__title">Movies</h2>
+
+  <!-- Display Error Message -->
+  <div *ngIf="errorMessage" class="movies__error" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Display Loading State -->
+  <div *ngIf="loading" class="movies__loading">
+    Loading movies...
+  </div>
+
+  <!-- Movies Grid -->
+  <div class="movies__grid" *ngIf="!loading && movies.length">
+    <app-movie-card
+      *ngFor="let movie of movies"
+      [movie]="movie">
+    </app-movie-card>
+  </div>
+
+  <!-- No Movies Found -->
+  <div *ngIf="!loading && !movies.length && !errorMessage" class="movies__no-movies">
+    No movies found.
+  </div>
+</section>

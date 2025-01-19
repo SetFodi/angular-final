@@ -1,0 +1,140 @@
+/* CSS Variables for Easy Theming */
+:root {
+  --header-bg-color: #141414;
+  --logo-color: #e50914;
+  --nav-link-color: #e5e5e5;
+  --nav-link-hover-color: #b3b3b3;
+  --toggle-bar-color: #e5e5e5;
+  --transition-duration: 0.3s;
+}
+
+/* Header Styles */
+.header {
+  background-color: var(--header-bg-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Navigation Container */
+.header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Brand/Logo */
+.header__brand {
+  display: flex;
+  align-items: center;
+}
+
+.header__logo {
+  text-decoration: none;
+}
+
+.header__logo-text {
+  color: var(--logo-color);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Navigation Links */
+.header__nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.button-link {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  color: inherit;
+  display: block;
+  text-align: left;
+}
+.button-link:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Example hover effect */
+}
+.header__nav-link {
+  color: var(--nav-link-color);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-duration) ease-in-out;
+}
+
+.header__nav-link:hover,
+.header__nav-link:focus {
+  color: var(--nav-link-hover-color);
+}
+
+/* Hamburger Toggle Button (Hidden on Desktop) */
+.header__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.header__toggle:focus {
+  outline: 2px solid var(--nav-link-hover-color);
+}
+
+.header__toggle-bar {
+  width: 100%;
+  height: 3px;
+  background-color: var(--toggle-bar-color);
+  border-radius: 2px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  /* Show Hamburger Menu */
+  .header__toggle {
+    display: flex;
+  }
+
+  /* Hide Navigation Links */
+  .header__nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--header-bg-color);
+    flex-direction: column;
+    align-items: center;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--transition-duration) ease-in-out;
+  }
+
+  /* Show Navigation Links When Active */
+  .header__nav-links.active {
+    max-height: 300px; /* Adjust as needed */
+  }
+
+  .header__nav-item {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
+  .header__nav-link {
+    width: 100%;
+    display: block;
+  }
+}

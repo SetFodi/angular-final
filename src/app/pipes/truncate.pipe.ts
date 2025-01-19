@@ -1,10 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'truncate'
+  name: 'truncate',
+  standalone: true
 })
 export class TruncatePipe implements PipeTransform {
-
   transform(value: string, limit: number = 100): string {
     if (!value) return '';
     if (value.length > limit) {
@@ -12,5 +12,4 @@ export class TruncatePipe implements PipeTransform {
     }
     return value;
   }
-
 }

@@ -1,11 +1,38 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Movie } from '../../services/movies.service';
 
 @Component({
   selector: 'app-movie-card',
-  templateUrl: './movie-card.component.html'
+  standalone: true,
+  imports: [CommonModule, RouterModule],
+  templateUrl: './movie-card.component.html',
+  styleUrls: ['./movie-card.component.css']
 })
 export class MovieCardComponent {
-  @Input() movie: any; // pass down movie from parent
+  @Input() movie!: Movie;
+  isOverlayVisible: boolean = false;
 
-  constructor() {}
+  /* Event Listeners for Mouse and Keyboard Interactions */
+
+  @HostListener('mouseenter')
+  onMouseEnter() {
+    this.isOverlayVisible = true;
+  }
+
+  @HostListener('mouseleave')
+  onMouseLeave() {
+    this.isOverlayVisible = false;
+  }
+
+  @HostListener('focusin')
+  onFocusIn() {
+    this.isOverlayVisible = true;
+  }
+
+  @HostListener('focusout')
+  onFocusOut() {
+    this.isOverlayVisible = false;
+  }
 }

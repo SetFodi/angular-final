@@ -1,16 +1,104 @@
-<h2>Admin Panel</h2>
-<form [formGroup]="movieForm" (ngSubmit)="submitMovie()">
-  <label>Title:</label>
-  <input formControlName="title" />
+<!-- admin.component.html -->
+<section class="admin">
+  <h2 class="admin__title">Admin Panel</h2>
+  
+  <div class="admin__container">
+    <!-- Display Success or Error Messages -->
+    <div *ngIf="successMessage" class="admin__success" role="alert">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="admin__error" role="alert">
+      {{ errorMessage }}
+    </div>
 
-  <label>Overview:</label>
-  <textarea formControlName="overview"></textarea>
+    <form [formGroup]="movieForm" (ngSubmit)="submitMovie()" class="admin__form" novalidate>
+      <!-- Title Field -->
+      <div class="admin__form-group">
+        <label for="title" class="admin__label">Title:</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="admin__input"
+          placeholder="Enter movie title"
+          aria-describedby="titleHelp"
+          required
+        />
+        <!-- Validation Error -->
+        <div *ngIf="movieForm.get('title')?.touched && movieForm.get('title')?.invalid" class="admin__validation" id="titleHelp">
+          <small *ngIf="movieForm.get('title')?.errors?.['required']">Title is required.</small>
+        </div>
+      </div>
 
-  <label>Poster URL:</label>
-  <input formControlName="posterUrl" />
+      <!-- Overview Field -->
+      <div class="admin__form-group">
+        <label for="overview" class="admin__label">Overview:</label>
+        <textarea
+          id="overview"
+          formControlName="overview"
+          class="admin__textarea"
+          placeholder="Enter movie overview"
+          aria-describedby="overviewHelp"
+          required
+        ></textarea>
+        <!-- Validation Error -->
+        <div *ngIf="movieForm.get('overview')?.touched && movieForm.get('overview')?.invalid" class="admin__validation" id="overviewHelp">
+          <small *ngIf="movieForm.get('overview')?.errors?.['required']">Overview is required.</small>
+        </div>
+      </div>
 
-  <label>Rating:</label>
-  <input formControlName="rating" type="number" />
+      <!-- Poster URL Field -->
+      <div class="admin__form-group">
+        <label for="posterUrl" class="admin__label">Poster URL:</label>
+        <input
+          type="url"
+          id="posterUrl"
+          formControlName="posterUrl"
+          class="admin__input"
+          placeholder="Enter poster image URL"
+          aria-describedby="posterUrlHelp"
+          required
+          (input)="onPosterUrlChange()" 
+        />
+        <!-- Trigger preview on input -->
+        <!-- Validation Error -->
+        <div *ngIf="movieForm.get('posterUrl')?.touched && movieForm.get('posterUrl')?.invalid" class="admin__validation" id="posterUrlHelp">
+          <small *ngIf="movieForm.get('posterUrl')?.errors?.['required']">Poster URL is required.</small>
+          <small *ngIf="movieForm.get('posterUrl')?.errors?.['pattern']">Please enter a valid URL.</small>
+        </div>
+      </div>
 
-  <button type="submit">Add Movie</button>
-</form>
+      <!-- Image Preview -->
+      <div class="admin__image-preview" *ngIf="posterUrl">
+        <p>Image Preview:</p>
+        <img [src]="posterUrl" alt="Poster Preview" (error)="onImageError()" />
+      </div>
+
+      <!-- Rating Field -->
+      <div class="admin__form-group">
+        <label for="rating" class="admin__label">Rating:</label>
+        <input
+          type="number"
+          id="rating"
+          formControlName="rating"
+          class="admin__input"
+          placeholder="Enter movie rating"
+          min="0"
+          max="10"
+          aria-describedby="ratingHelp"
+          required
+        />
+        <!-- Validation Error -->
+        <div *ngIf="movieForm.get('rating')?.touched && movieForm.get('rating')?.invalid" class="admin__validation" id="ratingHelp">
+          <small *ngIf="movieForm.get('rating')?.errors?.['required']">Rating is required.</small>
+          <small *ngIf="movieForm.get('rating')?.errors?.['min']">Rating cannot be less than 0.</small>
+          <small *ngIf="movieForm.get('rating')?.errors?.['max']">Rating cannot be more than 10.</small>
+        </div>
+      </div>
+
+      <button type="submit" class="admin__button" [disabled]="movieForm.invalid">
+        Add Movie
+      </button>
+    </form>
+  </div>
+</section>

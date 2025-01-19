@@ -1,0 +1,59 @@
+<!-- header.component.html -->
+<header class="header">
+  <nav class="header__nav">
+    <!-- Logo -->
+    <div class="header__brand">
+      <!-- Replace with your logo image if available -->
+      <a routerLink="/home" class="header__logo">
+        <span class="header__logo-text">MOVIES</span>
+      </a>
+    </div>
+
+    <!-- Hamburger Menu for Mobile -->
+    <button
+      class="header__toggle"
+      aria-label="Toggle navigation"
+      [attr.aria-expanded]="isNavActive"
+      (click)="toggleNav()"
+    >
+      <span class="header__toggle-bar"></span>
+      <span class="header__toggle-bar"></span>
+      <span class="header__toggle-bar"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <ul
+      class="header__nav-links"
+      [class.active]="isNavActive"
+      [attr.aria-hidden]="!isNavActive"
+    >
+      <li class="header__nav-item">
+        <a routerLink="/home" class="header__nav-link">Home</a>
+      </li>
+      <li class="header__nav-item">
+        <a routerLink="/movies" class="header__nav-link">Movies</a>
+      </li>
+      <!-- Show Admin link only if user is admin -->
+      <li class="header__nav-item" *ngIf="isAdmin">
+        <a routerLink="/admin" class="header__nav-link">Admin</a>
+      </li>
+      
+      <!-- Show Login and Register if not authenticated -->
+      <ng-container *ngIf="!isAuthenticated; else loggedIn">
+        <li class="header__nav-item">
+          <a routerLink="/login" class="header__nav-link">Login</a>
+        </li>
+        <li class="header__nav-item">
+          <a routerLink="/register" class="header__nav-link">Register</a>
+        </li>
+      </ng-container>
+      
+      <!-- Show Logout if authenticated -->
+      <ng-template #loggedIn>
+        <li class="header__nav-item">
+          <button (click)="logout()" class="header__nav-link button-link">Logout</button>
+        </li>
+      </ng-template>
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,140 @@
+/* CSS Variables for Easy Theming */
+:root {
+  --movie-card-bg-color: #181818;
+  --movie-card-text-color: #ffffff;
+  --movie-card-overlay-bg: rgba(0, 0, 0, 0.6); /* Adjusted for better contrast */
+  --movie-card-button-bg: #e50914;
+  --movie-card-button-hover-bg: #f40612;
+  --movie-card-button-text-color: #ffffff;
+  --transition-duration: 0.3s;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Movie Card Styles */
+.movie-card {
+  position: relative;
+  background-color: var(--movie-card-bg-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  outline: none;
+}
+
+.movie-card:focus,
+.movie-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+}
+
+.movie-card__poster-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 150%; /* 2:3 Aspect Ratio */
+  overflow: hidden;
+}
+
+.movie-card__poster {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none; /* Initial state: no blur */
+  transition: all ease 0.4s;
+}
+
+.movie-card:focus .movie-card__poster,
+.movie-card:hover .movie-card__poster {
+  transform: scale(1.05); /* Slightly scale up the poster */
+  filter: blur(4px); /* Apply a 2px blur */
+}
+
+.movie-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--movie-card-overlay-bg); /* Semi-transparent overlay */
+  color: var(--movie-card-text-color);
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity var(--transition-duration) ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  pointer-events: none; /* Prevents overlay from blocking mouse events when not visible */
+}
+
+.movie-card:focus .movie-card__overlay,
+.movie-card:hover .movie-card__overlay {
+  opacity: 1;
+  pointer-events: auto; /* Allows interaction when visible */
+}
+
+.movie-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-weight: bold;
+}
+
+.movie-card__details-btn {
+  background-color: var(--movie-card-button-bg);
+  color: var(--movie-card-button-text-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color var(--transition-duration) ease, transform var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+  text-decoration: none;
+}
+
+.movie-card__details-btn:hover,
+.movie-card__details-btn:focus {
+  background-color: var(--movie-card-button-hover-bg);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.5);
+}
+
+.movie-card__details-btn:focus {
+  transform: translateY(-2px);
+}
+
+.movie-card__details-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 3px rgba(201, 42, 114, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movie-card__title {
+    font-size: 1rem;
+  }
+
+  .movie-card__details-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-card__title {
+    font-size: 0.9rem;
+  }
+
+  .movie-card__details-btn {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
+  }
+}

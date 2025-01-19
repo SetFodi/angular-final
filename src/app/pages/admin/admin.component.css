@@ -1,0 +1,235 @@
+/* admin.component.css */
+
+/* CSS Variables for Easy Theming */
+:root {
+  --admin-bg-color: #1c1c1c;
+  --admin-text-color: #e5e5e5;
+  --admin-input-bg: #2c2c2c;
+  --admin-input-border: #444;
+  --admin-input-text: #e5e5e5;
+  --admin-button-bg: #e50914;
+  --admin-button-hover-bg: #f40612;
+  --admin-success-color: #28a745;
+  --admin-error-color: #ff4c4c;
+  --transition-duration: 0.3s;
+  --max-width: 600px;
+  --box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --border-radius: 8px;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Admin Section */
+.admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #141414, #0f0f0f);
+  padding: 2rem 1rem;
+  font-family: var(--font-family);
+}
+
+/* Title */
+.admin__title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--admin-text-color);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: linear-gradient(90deg, #e50914, #f40612);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Admin Container */
+.admin__container {
+  background-color: var(--admin-bg-color);
+  padding: 3rem 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  color: var(--admin-text-color);
+  width: 100%;
+  max-width: var(--max-width);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Success Message */
+.admin__success {
+  background-color: rgba(40, 167, 69, 0.2);
+  color: var(--admin-success-color);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Error Message */
+.admin__error {
+  background-color: rgba(255, 76, 76, 0.2);
+  color: var(--admin-error-color);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Form */
+.admin__form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form Group */
+.admin__form-group {
+  margin-bottom: 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.admin__label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--admin-text-color);
+  font-size: 1.1rem;
+}
+
+/* Inputs */
+.admin__input,
+.admin__textarea {
+  padding: 0.75rem 1rem;
+  background-color: var(--admin-input-bg);
+  border: 1px solid var(--admin-input-border);
+  border-radius: 4px;
+  color: var(--admin-input-text);
+  font-size: 1rem;
+  transition: border-color var(--transition-duration) ease-in-out, box-shadow var(--transition-duration) ease-in-out;
+}
+
+.admin__input::placeholder,
+.admin__textarea::placeholder {
+  color: #999;
+}
+
+.admin__input:focus,
+.admin__textarea:focus {
+  outline: none;
+  border-color: var(--admin-button-bg);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.3);
+}
+
+/* Textarea */
+.admin__textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Validation Messages */
+.admin__validation {
+  margin-top: 0.5rem;
+  color: var(--admin-error-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Image Preview */
+.admin__image-preview {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.admin__image-preview img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: var(--box-shadow);
+  margin-top: 0.5rem;
+}
+
+/* Submit Button */
+.admin__button {
+  background-color: var(--admin-button-bg);
+  color: var(--admin-text-color);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-duration) ease, transform var(--transition-duration) ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin__button:hover,
+.admin__button:focus {
+  background-color: var(--admin-button-hover-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.5);
+  outline: none;
+}
+
+.admin__button:active {
+  transform: translateY(0);
+  box-shadow: 0 0 0 3px rgba(201, 42, 114, 0.5);
+}
+
+.admin__button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Fade-In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin__container {
+    padding: 2.5rem 2rem;
+  }
+
+  .admin__title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin__container {
+    padding: 2rem 1.5rem;
+  }
+
+  .admin__title {
+    font-size: 2rem;
+  }
+
+  .admin__button {
+    padding: 0.65rem 1.2rem;
+    font-size: 1rem;
+  }
+
+  .admin__validation {
+    font-size: 0.8rem;
+  }
+
+  .admin__label {
+    font-size: 1rem;
+  }
+
+  .admin__image-preview img {
+    max-width: 100%;
+  }
+}

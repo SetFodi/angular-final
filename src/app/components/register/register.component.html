@@ -1,20 +1,60 @@
-<h2>Register</h2>
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>Email:</label>
-    <input type="email" formControlName="email" />
-    <div *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched">
-      Email is required
+<section class="auth">
+  <div class="auth__container">
+    <h2 class="auth__title">Register</h2>
+
+    <!-- Display Error Message -->
+    <div *ngIf="errorMessage" class="auth__error" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth__form" novalidate>
+      <!-- Email Field -->
+      <div class="auth__form-group">
+        <label for="email" class="auth__label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="auth__input"
+          placeholder="Enter your email"
+          aria-describedby="emailHelp"
+          required
+        />
+        <!-- Validation Error -->
+        <div *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid" class="auth__validation">
+          <small *ngIf="registerForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="registerForm.get('email')?.errors?.['email']">Please enter a valid email.</small>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="auth__form-group">
+        <label for="password" class="auth__label">Password:</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="auth__input"
+          placeholder="Enter your password"
+          required
+        />
+        <!-- Validation Error -->
+        <div *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid" class="auth__validation">
+          <small *ngIf="registerForm.get('password')?.errors?.['required']">Password is required.</small>
+          <small *ngIf="registerForm.get('password')?.errors?.['minlength']">
+            Password must be at least {{ registerForm.get('password')?.errors?.['minlength'].requiredLength }} characters long.
+          </small>
+        </div>
+      </div>
+
+      <button type="submit" class="auth__button" [disabled]="registerForm.invalid">
+        Register
+      </button>
+    </form>
+
+    <!-- Additional Links -->
+    <div class="auth__links">
+      <a routerLink="/login" class="auth__link">Already have an account? Login</a>
     </div>
   </div>
-
-  <div>
-    <label>Password:</label>
-    <input type="password" formControlName="password" />
-    <div *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
-      Password is required (min length 6)
-    </div>
-  </div>
-
-  <button type="submit" [disabled]="registerForm.invalid">Register</button>
-</form>
+</section>

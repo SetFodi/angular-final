@@ -1,20 +1,58 @@
-<h2>Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>Email:</label>
-    <input type="email" formControlName="email" />
-    <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
-      Email is required
+<section class="auth">
+  <div class="auth__container">
+    <h2 class="auth__title">Sign In</h2>
+
+    <!-- Display Error Message -->
+    <div *ngIf="errorMessage" class="auth__error" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth__form" novalidate>
+      <!-- Email Field -->
+      <div class="auth__form-group">
+        <label for="email" class="auth__label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="auth__input"
+          placeholder="Enter your email"
+          aria-describedby="emailHelp"
+          required
+        />
+        <!-- Validation Error -->
+        <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="auth__validation">
+          <small *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="loginForm.get('email')?.errors?.['email']">Please enter a valid email.</small>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="auth__form-group">
+        <label for="password" class="auth__label">Password:</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="auth__input"
+          placeholder="Enter your password"
+          required
+        />
+        <!-- Validation Error -->
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="auth__validation">
+          <small *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</small>
+        </div>
+      </div>
+
+      <button type="submit" class="auth__button" [disabled]="loginForm.invalid">
+        Sign In
+      </button>
+    </form>
+
+    <!-- Additional Links -->
+    <div class="auth__links">
+      <a routerLink="/register" class="auth__link">Don't have an account? Register</a>
+      <a routerLink="/forgot-password" class="auth__link">Forgot Password?</a>
     </div>
   </div>
-
-  <div>
-    <label>Password:</label>
-    <input type="password" formControlName="password" />
-    <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
-      Password is required
-    </div>
-  </div>
-
-  <button type="submit" [disabled]="loginForm.invalid">Login</button>
-</form>
+</section>

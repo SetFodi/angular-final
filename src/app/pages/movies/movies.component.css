@@ -1,0 +1,86 @@
+/* CSS Variables for Easy Theming */
+:root {
+  --movies-bg-color: #141414;
+  --movies-text-color: #e5e5e5;
+  --movies-title-color: #e50914;
+  --movies-error-color: #ff4c4c;
+  --movies-loading-color: #ccc;
+  --transition-duration: 0.3s;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --max-width: 1200px;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.movies {
+  padding: 2rem 1rem;
+  background-color: var(--movies-bg-color);
+  font-family: var(--font-family);
+  color: var(--movies-text-color);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.movies__title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--movies-title-color);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: linear-gradient(90deg, #e50914, #f40612);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.movies__error,
+.movies__no-movies {
+  background-color: rgba(255, 76, 76, 0.2);
+  color: var(--movies-error-color);
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1rem auto;
+  max-width: 600px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.movies__loading {
+  color: var(--movies-loading-color);
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.movies__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .movies__title {
+    font-size: 2rem;
+  }
+
+  .movies__grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .movies__title {
+    font-size: 1.8rem;
+  }
+
+  .movies__grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    padding: 0 1rem;
+  }
+}
